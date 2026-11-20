@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les électrons de l'atome – Physique-chimie 2de</title>
+<style>
+:root{
+  --navy:#18224A; --ink:#1B1E2E; --muted:#6B7280;
+  --orange:#D9480F; --gold:#F2A007; --gold-d:#A86A00;
+  --teal:#0E9594; --green:#2B8A3E; --violet:#5B5F97;
+  --bg:#F4F6FB; --card:#EEF1F8; --teal-l:#DDF1F1; --gold-l:#FDF0D5;
+  --green-l:#E1F2E4; --red-l:#F8DED6; --violet-l:#E3E4F1;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Lato,Calibri,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;font-size:17px}
+h1,h2,h3{font-family:Cambria,"Noto Serif",Georgia,serif;color:var(--navy);line-height:1.2}
+h2{font-size:1.65rem;margin:.35rem 0 1rem}
+h3{font-size:1.15rem;margin:0 0 .4rem}
+sup,sub{font-size:.7em;line-height:0}
+.f{color:var(--orange);font-weight:700}               /* mot à compléter sur la fiche */
+.dark .f{color:var(--gold)}
+b,strong{font-weight:700}
+
+/* barre de navigation */
+nav{position:sticky;top:0;z-index:10;background:var(--navy);display:flex;gap:.3rem;flex-wrap:wrap;padding:.5rem 1rem;align-items:center}
+nav a{color:#fff;text-decoration:none;font-size:.85rem;padding:.3rem .7rem;border-radius:999px}
+nav a:hover{background:rgba(255,255,255,.15)}
+nav .brand{font-weight:700;color:var(--gold);margin-right:auto}
+
+main{max-width:1050px;margin:0 auto;padding:1.2rem}
+section.slide{background:#fff;border-radius:14px;padding:1.6rem 1.8rem;margin:1.2rem 0;box-shadow:0 2px 10px rgba(24,34,74,.07)}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .7rem;border-radius:999px;background:var(--teal-l);color:var(--teal)}
+.tag.todo{background:var(--red-l);color:var(--orange)}
+.tag.corr{background:var(--green-l);color:var(--green)}
+
+/* pages sombres (titre, parties) */
+.dark{background:var(--navy)!important;color:#fff}
+.dark h1,.dark h2{color:#fff}
+.hero{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;justify-content:space-between}
+.hero .txt{flex:1 1 320px}
+.hero h1{font-size:2.6rem;margin:.4rem 0}
+.kicker{color:var(--gold);font-size:.8rem;font-weight:700;letter-spacing:.15em}
+.roman{color:var(--gold);font-family:Cambria,Georgia,serif;font-size:3rem;font-weight:700;line-height:1}
+.sub{color:#C9D3EA}
+.caption{text-align:center;color:#9AA8C9;font-size:.8rem;font-style:italic}
+
+.legend{background:var(--gold-l);border-radius:10px;padding:.8rem 1rem;font-size:.95rem}
+
+/* grilles */
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem}
+.ex3{grid-template-columns:3fr 2fr}
+@media(max-width:760px){.g2,.g3,.ex3{grid-template-columns:1fr}.g5{grid-template-columns:repeat(2,1fr)}section.slide{padding:1.2rem}.hero h1{font-size:2rem}}
+.box{background:var(--card);border-radius:10px;padding:1rem 1.1rem}
+.box.teal{background:var(--teal-l)} .box.gold{background:var(--gold-l)} .box.green{background:var(--green-l)}
+.box.red{background:var(--red-l)} .box.violet{background:var(--violet-l)} .box.navy{background:var(--navy);color:#fff}
+.question{background:var(--navy);color:#fff;border-radius:10px;padding:1rem 1.2rem;font-style:italic}
+
+/* objectifs */
+.obj{display:flex;gap:.8rem;align-items:center}
+.num{flex:none;width:2rem;height:2rem;border-radius:50%;background:var(--gold);color:var(--ink);font-weight:700;display:flex;align-items:center;justify-content:center}
+.num.teal{background:var(--teal);color:#fff} .num.navy{background:var(--navy);color:#fff} .num.green{background:var(--green);color:#fff}
+
+/* frise */
+.timeline .date{font-weight:700;color:var(--teal);font-size:1.1rem}
+.timeline .date.now{color:var(--gold-d)}
+
+/* tableaux */
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th{background:var(--navy);color:#fff;padding:.5rem}
+td{border:1px solid #D5DAE6;padding:.45rem;text-align:center}
+@media(max-width:760px){table{font-size:.8rem}th,td{padding:.3rem}}
+table.green th{background:var(--green)}
+td.hl{background:var(--gold-l);font-weight:700}
+.scroll{overflow-x:auto}
+
+/* ordre de remplissage */
+.chain{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center;margin:1rem 0}
+.sc{border:2px solid var(--teal);background:var(--teal-l);border-radius:10px;padding:.5rem 1rem;text-align:center;min-width:80px}
+.sc.p{border-color:var(--gold);background:var(--gold-l)}
+.sc b{display:block;font-family:Cambria,Georgia,serif;font-size:1.6rem;color:var(--teal)}
+.sc.p b{color:var(--gold-d)}
+.sc small{font-size:.75rem}
+.arrow{font-size:1.5rem;color:var(--navy)}
+
+/* cases quantiques */
+.cases{display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap}
+.cases .lab{font-size:.75rem;color:var(--teal);text-align:center;font-weight:700}
+.cases .row{display:flex;border:2px solid var(--teal)}
+.cases .row span{width:30px;height:30px;border-right:1px solid var(--teal);display:flex;align-items:center;justify-content:center}
+.cases .row span:last-child{border-right:none}
+.dot{width:14px;height:14px;border-radius:50%;background:var(--gold);display:inline-block}
+.config{border:2px solid var(--gold);border-radius:10px;background:#fff;text-align:center;font-size:1.5rem;font-weight:700;padding:.6rem;margin:1rem 0 .4rem}
+.ok{color:var(--green);font-weight:700;font-size:.9rem}
+
+/* cartes éléments */
+.el{display:flex;align-items:center;gap:1rem;background:var(--card);border-radius:10px;padding:1rem 1.2rem}
+.el .sym{font-family:Cambria,Georgia,serif;font-size:2rem;font-weight:700;color:var(--navy);min-width:2.6rem}
+.el small{color:var(--muted)}
+.el.c{background:var(--green-l)} .el.c .sym{color:var(--green)}
+
+/* électrons valence/cœur */
+.split{display:flex;gap:.6rem;margin:.4rem 0}
+.split div{flex:1;text-align:center;border-radius:8px;padding:.4rem;background:#fff;border:1px solid #D5DAE6}
+.split div.v{background:var(--gold-l);border:2px solid var(--gold);font-weight:700}
+.split + .lbl{display:flex;gap:.6rem;font-size:.8rem;text-align:center}
+.split + .lbl span{flex:1;color:var(--muted)} .split + .lbl span.v{color:var(--gold-d);font-weight:700}
+
+/* tableau périodique */
+.pt{display:grid;grid-template-columns:24px repeat(8,minmax(34px,52px));gap:4px;font-size:.95rem;justify-content:center}
+.pt .h{font-size:.7rem;color:var(--muted);text-align:center;align-self:end}
+.pt .r{font-size:.7rem;color:var(--muted);align-self:center}
+.cell{position:relative;aspect-ratio:1;border:1px solid #CBD2E1;border-radius:5px;background:var(--card);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--navy)}
+.cell i{position:absolute;top:2px;left:4px;font-size:.6rem;font-style:normal;color:var(--muted);font-weight:400}
+.pt.color .s{background:var(--teal-l);border-color:var(--teal)} .pt.color .p{background:var(--gold-l);border-color:var(--gold)}
+.empty{visibility:hidden}
+.ve{display:grid;grid-template-columns:24px repeat(8,minmax(34px,52px));gap:4px;justify-content:center;margin-top:.5rem}
+.ve span{aspect-ratio:1;max-width:34px;margin:auto;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;width:100%;font-size:.85rem;font-weight:700}
+
+/* listes de correction */
+.cl{display:flex;gap:1rem;align-items:flex-start;padding:.6rem 1rem;border-radius:8px;border:1px solid #E1E5EF;margin:.4rem 0}
+.cl:nth-child(odd){background:var(--green-l);border-color:transparent}
+.cl .k{color:var(--green);font-weight:700;min-width:2.6rem}
+
+/* familles */
+.fam h3{margin-bottom:.2rem}
+.fam .col{font-weight:700;font-size:.9rem}.fam em{color:var(--muted);font-size:.9rem}
+
+/* ions */
+.ionrow{display:grid;grid-template-columns:1fr 130px 1fr auto;gap:.8rem;align-items:center;margin:.8rem 0}
+.ionrow .big{font-size:2.2rem;text-align:center;color:var(--green);line-height:1}
+.ionrow .lbl{font-size:.8rem;text-align:center;font-weight:700;color:var(--green)}
+.ionrow.vi .big,.ionrow.vi .lbl{color:var(--violet)}
+@media(max-width:760px){.ionrow{grid-template-columns:1fr}.ionrow .big{transform:rotate(90deg)}}
+.charge{text-align:center;border-radius:10px;padding:1rem .5rem}
+.charge .q{font-size:2.2rem;font-weight:700;font-family:Cambria,Georgia,serif}
+.charge.pos{background:var(--green-l)} .charge.pos .q{color:var(--green)}
+.charge.neg{background:var(--violet-l)} .charge.neg .q{color:var(--violet)}
+.charge small{color:var(--muted)}
+
+/* exercices / QCM */
+ol.ex{padding-left:1.2rem} ol.ex li{margin:.5rem 0}
+.qcm{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:.5rem;align-items:center;padding:.6rem .8rem;border-radius:8px;font-size:.95rem}
+.qcm:nth-child(odd){background:var(--card)}
+@media(max-width:760px){.qcm{grid-template-columns:1fr}}
+.badge{display:inline-flex;width:1.9rem;height:1.9rem;border-radius:50%;background:var(--green);color:#fff;font-weight:700;align-items:center;justify-content:center;flex:none}
+
+/* bouton correction */
+details.correction{margin-top:1rem}
+details.correction>summary{cursor:pointer;display:inline-block;background:var(--green);color:#fff;font-weight:700;padding:.55rem 1.1rem;border-radius:999px;list-style:none;user-select:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction[open]>summary{background:var(--muted)}
+details.correction>summary::after{content:" ▸"}
+details.correction[open]>summary::after{content:" ▾"}
+details.correction .inner{margin-top:1rem;border-top:2px dashed var(--green-l);padding-top:1rem}
+.hint{font-size:.9rem;color:var(--muted);font-style:italic}
+.note{font-size:.88rem;color:var(--muted);border-left:3px solid #CBD2E1;padding-left:.8rem;margin-top:1rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:2rem 1rem}
+@media print{nav,details.correction>summary{display:none}details.correction .inner{display:block}section.slide{break-inside:avoid;box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">Les électrons de l'atome</span>
+  <a href="#intro">Introduction</a>
+  <a href="#partie1">I. Cortège électronique</a>
+  <a href="#partie2">II. Tableau périodique</a>
+  <a href="#partie3">III. Familles et ions</a>
+  <a href="#bilan">Bilan</a>
+</nav>
+
+<main>
+
+<!-- 1 · Titre -->
+<section class="slide dark">
+  <div class="hero">
+    <div class="txt">
+      <div class="kicker">PHYSIQUE-CHIMIE · SECONDE</div>
+      <h1>Les électrons de l'atome</h1>
+      <p class="sub">Du cortège électronique au tableau périodique</p>
+    </div>
+    <div><div class="atom" data-shells="2,8,8" data-size="230"></div><p class="caption">Argon : 18 électrons</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="legend">📝 <b>Pour les élèves absents :</b> lis le cours dans l'ordre et complète ta fiche. Les mots écrits <span class="f">en orange</span> sont ceux à recopier dans les trous de la fiche. Pour chaque exercice, cherche d'abord seul, puis clique sur <b>« Afficher la correction »</b> pour vérifier.</div>
+</section>
+
+<!-- 2 · Problématique -->
+<section class="slide" id="intro">
+  <span class="tag">Introduction</span>
+  <h2>Problématique et objectifs</h2>
+  <p class="question">Comment les électrons sont-ils organisés autour du noyau, et pourquoi cette organisation explique-t-elle la place des éléments dans le tableau périodique ?</p>
+  <p><b>À la fin du chapitre, je sais :</b></p>
+  <div class="g2">
+    <div class="obj"><span class="num">1</span>écrire la configuration électronique d'un atome (Z ≤ 18)</div>
+    <div class="obj"><span class="num">2</span>repérer ses électrons de valence</div>
+    <div class="obj"><span class="num">3</span>situer un élément dans le tableau périodique et inversement</div>
+    <div class="obj"><span class="num">4</span>expliquer la stabilité des gaz nobles et prévoir la charge d'un ion</div>
+  </div>
+</section>
+
+<!-- 3 · Histoire -->
+<section class="slide">
+  <span class="tag">Introduction</span>
+  <h2>Un peu d'histoire</h2>
+  <div class="g3 timeline">
+    <div><div class="date">1869</div><div class="box"><h3>Dmitri Mendeleïev</h3>classe les 63 éléments connus dans un tableau et laisse des cases vides pour des éléments encore inconnus, dont il prédit les propriétés.</div></div>
+    <div><div class="date">1897</div><div class="box"><h3>Joseph John Thomson</h3>découvre l'<span class="f">électron</span>, particule de charge électrique <span class="f">négative</span>, en étudiant les rayons d'un tube cathodique.</div></div>
+    <div><div class="date now">Aujourd'hui</div><div class="box"><h3>Le modèle actuel</h3>Les électrons forment le <span class="f">cortège électronique</span> autour du noyau. Leur organisation explique le tableau périodique.</div></div>
+  </div>
+</section>
+
+<!-- 4 · Partie I -->
+<section class="slide dark" id="partie1">
+  <div class="hero">
+    <div class="txt"><div class="roman">I</div><h1>Le cortège électronique</h1><p class="sub">Comment les électrons se répartissent-ils autour du noyau ?</p></div>
+    <div class="atom" data-shells="2,8" data-size="200"></div>
+  </div>
+</section>
+
+<!-- 5 · Couches -->
+<section class="slide">
+  <span class="tag">I · Cortège électronique</span>
+  <h2>1. Couches et sous-couches électroniques</h2>
+  <div class="g2" style="align-items:center">
+    <div class="atom" data-shells="2,8,8" data-size="260" data-labels="1"></div>
+    <div>
+      <p>Les électrons se répartissent en <span class="f">couches</span> numérotées n = 1, 2, 3…<br>
+      Chaque couche est divisée en <span class="f">sous-couches</span> notées <b>s</b> et <b>p</b>.</p>
+      <div class="scroll"><table>
+        <tr><th>Couche</th><th>Sous-couches</th><th>Nombre max d'électrons</th></tr>
+        <tr><td>n = 1</td><td>1s</td><td>2</td></tr>
+        <tr><td>n = 2</td><td>2s et 2p</td><td>2 + 6 = 8</td></tr>
+        <tr><td>n = 3</td><td>3s et 3p</td><td>2 + 6 = 8</td></tr>
+      </table></div>
+      <div class="box gold" style="margin-top:1rem">Une sous-couche <b>s</b> contient au maximum <span class="f">2</span> électrons.<br>Une sous-couche <b>p</b> contient au maximum <span class="f">6</span> électrons.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · Ordre de remplissage -->
+<section class="slide">
+  <span class="tag">I · Cortège électronique</span>
+  <h2>2. L'ordre de remplissage</h2>
+  <p>Dans l'état fondamental, les sous-couches se remplissent toujours dans le même ordre :</p>
+  <div class="chain">
+    <div class="sc"><b>1s</b><small>2 e⁻ max</small></div><span class="arrow">➜</span>
+    <div class="sc"><b>2s</b><small>2 e⁻ max</small></div><span class="arrow">➜</span>
+    <div class="sc p"><b>2p</b><small>6 e⁻ max</small></div><span class="arrow">➜</span>
+    <div class="sc"><b>3s</b><small>2 e⁻ max</small></div><span class="arrow">➜</span>
+    <div class="sc p"><b>3p</b><small>6 e⁻ max</small></div>
+  </div>
+  <div class="g2">
+    <div class="box"><h3>Règle</h3>Une sous-couche doit être <span class="f">pleine</span> avant que les électrons occupent la suivante.</div>
+    <div class="box"><h3>Bilan</h3>2 + 2 + 6 + 2 + 6 = <b>18 électrons</b> : c'est suffisant pour tous les atomes jusqu'à l'argon (Z = 18).</div>
+  </div>
+</section>
+
+<!-- 7 · Écrire une configuration -->
+<section class="slide">
+  <span class="tag">I · Cortège électronique</span>
+  <h2>3. Écrire une configuration électronique</h2>
+  <div class="g2">
+    <div>
+      <div class="obj" style="align-items:flex-start;margin-bottom:1rem"><span class="num teal">1</span><div><b>Compter les électrons</b><br>Un atome est neutre : il possède autant d'électrons que de protons, soit <b>Z électrons</b>.</div></div>
+      <div class="obj" style="align-items:flex-start;margin-bottom:1rem"><span class="num teal">2</span><div><b>Remplir dans l'ordre</b><br>1s → 2s → 2p → 3s → 3p, sans dépasser 2 électrons (s) ou 6 électrons (p).</div></div>
+      <div class="obj" style="align-items:flex-start"><span class="num teal">3</span><div><b>Écrire</b><br>Nom de la sous-couche, nombre d'électrons <b>en exposant</b>. Vérifier : somme des exposants = Z.</div></div>
+    </div>
+    <div class="box">
+      <b>Exemple : le carbone C (Z = 6)</b><br>6 électrons à placer :
+      <div class="cases" style="margin-top:.6rem">
+        <div><div class="lab">1s</div><div class="row"><span><i class="dot"></i></span><span><i class="dot"></i></span></div></div>
+        <div><div class="lab">2s</div><div class="row"><span><i class="dot"></i></span><span><i class="dot"></i></span></div></div>
+        <div><div class="lab">2p</div><div class="row"><span><i class="dot"></i></span><span><i class="dot"></i></span><span></span><span></span><span></span><span></span></div></div>
+      </div>
+      <div class="config">C : 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>2</sup></div>
+      <div class="ok">Vérification : 2 + 2 + 2 = 6 = Z ✓</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8-9 · Exercice 1 -->
+<section class="slide">
+  <span class="tag todo">À faire sur la fiche</span>
+  <h2>Exercice 1 – Écrire des configurations électroniques</h2>
+  <p>Écrire la configuration électronique à l'état fondamental des atomes suivants.</p>
+  <div class="g3">
+    <div class="el"><span class="sym">H</span><div>Hydrogène<br><small>Z = 1</small></div></div>
+    <div class="el"><span class="sym">He</span><div>Hélium<br><small>Z = 2</small></div></div>
+    <div class="el"><span class="sym">N</span><div>Azote<br><small>Z = 7</small></div></div>
+    <div class="el"><span class="sym">Ne</span><div>Néon<br><small>Z = 10</small></div></div>
+    <div class="el"><span class="sym">Na</span><div>Sodium<br><small>Z = 11</small></div></div>
+    <div class="el"><span class="sym">Cl</span><div>Chlore<br><small>Z = 17</small></div></div>
+  </div>
+  <details class="correction"><summary>Afficher la correction</summary><div class="inner">
+    <div class="g2">
+      <div class="el c"><span class="sym">H</span><small>Z = 1</small><b>1s<sup>1</sup></b></div>
+      <div class="el c"><span class="sym">He</span><small>Z = 2</small><b>1s<sup>2</sup></b></div>
+      <div class="el c"><span class="sym">N</span><small>Z = 7</small><b>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>3</sup></b></div>
+      <div class="el c"><span class="sym">Ne</span><small>Z = 10</small><b>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup></b></div>
+      <div class="el c"><span class="sym">Na</span><small>Z = 11</small><b>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>1</sup></b></div>
+      <div class="el c"><span class="sym">Cl</span><small>Z = 17</small><b>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>5</sup></b></div>
+    </div>
+  </div></details>
+</section>
+
+<!-- 10 · Valence -->
+<section class="slide">
+  <span class="tag">I · Cortège électronique</span>
+  <h2>4. Électrons de valence et électrons de cœur</h2>
+  <div class="g2">
+    <div>
+      <p>La <b>couche externe</b> est la <span class="f">dernière couche occupée</span> (n le plus grand).</p>
+      <p>Les électrons de la couche externe sont les <span class="f">électrons de valence</span>.</p>
+      <p>Les autres électrons sont les <span class="f">électrons de cœur</span>.</p>
+      <div class="box red"><b style="color:var(--orange)">⚠ Piège fréquent</b><br>On compte <b>toutes</b> les sous-couches de la couche externe : pour le carbone, 2s <b>et</b> 2p, soit 2 + 2 = 4 électrons de valence.</div>
+    </div>
+    <div>
+      <div class="box" style="margin-bottom:1rem"><b>Carbone C (Z = 6)</b>
+        <div class="split"><div>1s<sup>2</sup></div><div class="v">2s<sup>2</sup> 2p<sup>2</sup></div></div>
+        <div class="lbl"><span>2 électrons de cœur</span><span class="v">4 électrons de valence</span></div></div>
+      <div class="box"><b>Sodium Na (Z = 11)</b>
+        <div class="split"><div>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup></div><div class="v">3s<sup>1</sup></div></div>
+        <div class="lbl"><span>10 électrons de cœur</span><span class="v">1 électron de valence</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11-12 · Exercice 2 -->
+<section class="slide">
+  <span class="tag todo">À faire sur la fiche</span>
+  <h2>Exercice 2 – Repérer les électrons de valence</h2>
+  <p>Pour chacun des atomes suivants :<br>a. écrire la configuration électronique ;<br>b. indiquer le numéro de la couche externe ;<br>c. donner le nombre d'électrons de valence et d'électrons de cœur.</p>
+  <div class="g3">
+    <div class="el"><span class="sym">N</span><div>Azote<br><small>Z = 7</small></div></div>
+    <div class="el"><span class="sym">Mg</span><div>Magnésium<br><small>Z = 12</small></div></div>
+    <div class="el"><span class="sym">S</span><div>Soufre<br><small>Z = 16</small></div></div>
+  </div>
+  <details class="correction"><summary>Afficher la correction</summary><div class="inner">
+    <div class="scroll"><table class="green">
+      <tr><th>Atome</th><th>Configuration électronique</th><th>Couche externe</th><th>Valence</th><th>Cœur</th></tr>
+      <tr><td>N (Z = 7)</td><td>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>3</sup></td><td>n = 2</td><td class="hl">2 + 3 = 5</td><td>2</td></tr>
+      <tr><td>Mg (Z = 12)</td><td>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup></td><td>n = 3</td><td class="hl">2</td><td>10</td></tr>
+      <tr><td>S (Z = 16)</td><td>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>4</sup></td><td>n = 3</td><td class="hl">2 + 4 = 6</td><td>10</td></tr>
+    </table></div>
+    <div class="box green" style="margin-top:1rem">Astuce : la couche externe est celle du <b>plus grand chiffre</b> devant s ou p dans la configuration.</div>
+  </div></details>
+</section>
+
+<!-- 13 · Partie II -->
+<section class="slide dark" id="partie2">
+  <div class="hero">
+    <div class="txt"><div class="roman">II</div><h1>Le tableau périodique</h1><p class="sub">Quel lien entre la place d'un élément et ses électrons ?</p></div>
+    <div class="pt color mini" data-pt="mini" style="--c:#fff"></div>
+  </div>
+</section>
+
+<!-- 14 · Construction -->
+<section class="slide">
+  <span class="tag">II · Tableau périodique</span>
+  <h2>1. Comment le tableau est-il construit ?</h2>
+  <div class="g2" style="align-items:center">
+    <div>
+      <p>Les éléments sont classés par <span class="f">numéro atomique Z</span> croissant.</p>
+      <p>Une ligne s'appelle une <span class="f">période</span>. On change de ligne quand une <span class="f">nouvelle couche</span> commence à se remplir.</p>
+      <p>Une colonne s'appelle un <span class="f">groupe</span> (ou famille). Les éléments d'une même colonne ont le même nombre d'<span class="f">électrons de valence</span>.</p>
+    </div>
+    <div>
+      <div class="pt" data-pt="1"></div>
+      <p class="hint" style="text-align:center">Les 18 premiers éléments (3 premières périodes) — Z croissant ➜</p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 · Lire le tableau -->
+<section class="slide">
+  <span class="tag">II · Tableau périodique</span>
+  <h2>2. Lire le tableau : période et colonne</h2>
+  <div class="g2" style="align-items:start">
+    <div>
+      <div class="pt color" data-pt="1"></div>
+      <div class="ve"><i></i><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span></div>
+      <p class="hint" style="text-align:center">↑ électrons de valence (sauf He : 2)</p>
+    </div>
+    <div>
+      <div class="box" style="margin-bottom:.8rem"><b>Période n° n</b><br>→ la couche externe est la couche <span class="f">n</span>.</div>
+      <div class="box" style="margin-bottom:.8rem"><b>Colonne 1, 2</b> → 1, 2 électrons de valence<br><b>Colonnes 13 à 18</b> → <span class="f">3 à 8</span> électrons de valence</div>
+      <div class="box"><b>Blocs</b><br>Bloc <b>s</b> (turquoise) : la dernière sous-couche remplie est s.<br>Bloc <b>p</b> (orange) : c'est une sous-couche p.</div>
+    </div>
+  </div>
+  <p class="note">L'hélium (1s<sup>2</sup>) est placé dans la colonne 18 avec les gaz nobles car sa couche externe est pleine, bien qu'il n'ait que 2 électrons de valence.</p>
+</section>
+
+<!-- 16 · Configuration <-> position -->
+<section class="slide">
+  <span class="tag">II · Tableau périodique</span>
+  <h2>3. Passer de la configuration à la position… et inversement</h2>
+  <div class="g2">
+    <div class="box teal"><h3 style="color:var(--teal)">Configuration <span style="font-family:Arial,sans-serif">→</span> position</h3>
+      <p><b>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>5</sup></b></p>
+      <p>Couche externe : n = 3<br>→ <span class="f">3<sup>e</sup> période</span></p>
+      <p>Électrons de valence : 2 + 5 = 7<br>→ <span class="f">colonne 17</span></p>
+      <p>C'est le <b>chlore Cl</b> (Z = 17).</p></div>
+    <div class="box gold"><h3 style="color:var(--gold-d)">Position <span style="font-family:Arial,sans-serif">→</span> configuration</h3>
+      <p><b>Aluminium : 3<sup>e</sup> période, colonne 13</b></p>
+      <p>3<sup>e</sup> période → couche externe n = 3<br>Colonne 13 → 3 électrons de valence : 3s<sup>2</sup> 3p<sup>1</sup></p>
+      <p>Al : <span class="f">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>1</sup></span></p>
+      <p>Vérification : 13 électrons = Z ✓</p></div>
+  </div>
+</section>
+
+<!-- 17-18 · Exercice 3 -->
+<section class="slide">
+  <span class="tag todo">À faire sur la fiche</span>
+  <h2>Exercice 3 – Utiliser le tableau périodique</h2>
+  <div class="g2 ex3" style="align-items:start">
+    <ol class="ex">
+      <li>Identifier l'élément (période, colonne, nom) dont l'atome a pour configuration :<br>
+        a. 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>4</sup> &nbsp;&nbsp;&nbsp; b. 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>3</sup></li>
+      <li>Le silicium Si est situé dans la 3<sup>e</sup> période et la colonne 14. Écrire sa configuration électronique.</li>
+      <li>Le lithium Li a pour configuration 1s<sup>2</sup> 2s<sup>1</sup>. Le sodium Na est situé juste en dessous. Combien d'électrons de valence possède-t-il ? Justifier.</li>
+      <li>Le fluor F est dans la 2<sup>e</sup> période et la colonne 17. Quelle configuration lui correspond ?<br>
+        a. 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>5</sup> &nbsp;&nbsp; b. 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>5</sup> &nbsp;&nbsp; c. 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>3</sup></li>
+    </ol>
+    <div><div class="pt" data-pt="1"></div><p class="hint" style="text-align:center">Tableau à consulter si besoin</p></div>
+  </div>
+  <details class="correction"><summary>Afficher la correction</summary><div class="inner">
+    <div class="cl"><span class="k">1. a</span><span>n = 2 → 2<sup>e</sup> période ; 2 + 4 = 6 électrons de valence → colonne 16 : <b>oxygène O</b></span></div>
+    <div class="cl"><span class="k">1. b</span><span>n = 3 → 3<sup>e</sup> période ; 2 + 3 = 5 électrons de valence → colonne 15 : <b>phosphore P</b></span></div>
+    <div class="cl"><span class="k">2.</span><span>3<sup>e</sup> période, colonne 14 → 4 électrons de valence sur n = 3 : <b>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>2</sup></b></span></div>
+    <div class="cl"><span class="k">3.</span><span>Même colonne que Li → même nombre d'électrons de valence : <b>1 électron</b> (Na : …3s<sup>1</sup>)</span></div>
+    <div class="cl"><span class="k">4.</span><span>2<sup>e</sup> période → couche externe n = 2 ; colonne 17 → 7 électrons de valence : <b>réponse a</b></span></div>
+  </div></details>
+</section>
+
+<!-- 19 · Partie III -->
+<section class="slide dark" id="partie3">
+  <div class="hero">
+    <div class="txt"><div class="roman">III</div><h1>Familles chimiques, stabilité et ions</h1><p class="sub">Pourquoi certains atomes deviennent-ils des ions ?</p></div>
+    <div class="atom" data-shells="2,8" data-size="200"></div>
+  </div>
+</section>
+
+<!-- 20 · Familles -->
+<section class="slide">
+  <span class="tag">III · Familles et ions</span>
+  <h2>1. Les familles chimiques</h2>
+  <p>Une famille chimique regroupe les éléments d'une même <span class="f">colonne</span> : ils ont des <span class="f">propriétés chimiques</span> semblables car ils ont le même nombre d'électrons de valence.</p>
+  <div class="g3 fam">
+    <div class="box red"><h3 style="color:#C2453A">Alcalins</h3><div class="col">Colonne 1 (sauf H)</div><em>Li, Na, K…</em><p>1 électron de valence. Métaux très réactifs : ils réagissent vivement avec l'eau.</p></div>
+    <div class="box violet"><h3 style="color:var(--violet)">Halogènes</h3><div class="col">Colonne 17</div><em>F, Cl, Br, I</em><p>7 électrons de valence. Très réactifs ; le dichlore Cl<sub>2</sub> est un gaz toxique.</p></div>
+    <div class="box teal"><h3 style="color:var(--teal)">Gaz nobles</h3><div class="col">Colonne 18</div><em>He, Ne, Ar…</em><p>Très <span class="f">stables</span> : ils ne réagissent quasiment pas et existent sous forme d'atomes isolés.</p></div>
+  </div>
+</section>
+
+<!-- 21 · Gaz nobles -->
+<section class="slide">
+  <span class="tag">III · Familles et ions</span>
+  <h2>2. La stabilité des gaz nobles</h2>
+  <div class="g3">
+    <div class="box" style="text-align:center"><div class="atom" data-shells="2" data-size="110"></div><h3>He <small style="font-weight:400">Z = 2</small></h3><b>1s<sup>2</sup></b><p style="color:var(--gold-d);font-size:.9rem">couche externe : 2 électrons → <b>duet</b></p></div>
+    <div class="box" style="text-align:center"><div class="atom" data-shells="2,8" data-size="110"></div><h3>Ne <small style="font-weight:400">Z = 10</small></h3><b>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup></b><p style="color:var(--gold-d);font-size:.9rem">couche externe : 8 électrons → <b>octet</b></p></div>
+    <div class="box" style="text-align:center"><div class="atom" data-shells="2,8,8" data-size="110"></div><h3>Ar <small style="font-weight:400">Z = 18</small></h3><b>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup></b><p style="color:var(--gold-d);font-size:.9rem">couche externe : 8 électrons → <b>octet</b></p></div>
+  </div>
+  <div class="box navy dark" style="margin-top:1rem">
+    <p style="margin-top:0">Les gaz nobles sont stables car leur couche externe est <span class="f">saturée</span> (pleine) : 2 électrons pour He (<b>duet</b>), 8 pour les autres (<b>octet</b>).</p>
+    <p style="margin-bottom:0">Les autres atomes tendent à acquérir la configuration électronique du <span class="f">gaz noble le plus proche</span> en gagnant ou en perdant des électrons.</p>
+  </div>
+</section>
+
+<!-- 22 · Former un ion -->
+<section class="slide">
+  <span class="tag">III · Familles et ions</span>
+  <h2>3. Former un ion monoatomique</h2>
+  <div class="ionrow">
+    <div class="box"><b>Na</b> (11 e⁻)<br>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>1</sup></div>
+    <div><div class="lbl">perd 1 e⁻</div><div class="big">➜</div></div>
+    <div class="box green" style="border:1.5px solid var(--green)"><b>Na<sup>+</sup></b> (10 e⁻)<br>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup></div>
+    <em class="hint">comme le néon</em>
+  </div>
+  <div class="ionrow vi">
+    <div class="box"><b>Cl</b> (17 e⁻)<br>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>5</sup></div>
+    <div><div class="lbl">gagne 1 e⁻</div><div class="big">➜</div></div>
+    <div class="box violet" style="border:1.5px solid var(--violet)"><b>Cl<sup>−</sup></b> (18 e⁻)<br>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup></div>
+    <em class="hint">comme l'argon</em>
+  </div>
+  <div class="g2">
+    <div class="box green">Un atome qui <b>perd</b> des électrons devient un ion <b>positif</b> : un <span class="f">cation</span>.</div>
+    <div class="box violet">Un atome qui <b>gagne</b> des électrons devient un ion <b>négatif</b> : un <span class="f">anion</span>.</div>
+  </div>
+  <p class="note">Le noyau ne change pas : le nombre de protons reste Z. Seul le nombre d'électrons varie.</p>
+</section>
+
+<!-- 23 · Charge d'un ion -->
+<section class="slide">
+  <span class="tag">III · Familles et ions</span>
+  <h2>4. Prévoir la charge d'un ion avec le tableau</h2>
+  <p>Les éléments d'une même colonne forment des ions de <span class="f">même charge</span>.</p>
+  <div class="g5">
+    <div class="charge pos"><b>Colonne 1</b><br><small>perd 1 e⁻</small><div class="q">+</div>Li<sup>+</sup>, Na<sup>+</sup>, K<sup>+</sup></div>
+    <div class="charge pos"><b>Colonne 2</b><br><small>perd 2 e⁻</small><div class="q">2+</div>Be<sup>2+</sup>, Mg<sup>2+</sup>, Ca<sup>2+</sup></div>
+    <div class="charge pos"><b>Colonne 13</b><br><small>perd 3 e⁻</small><div class="q">3+</div>Al<sup>3+</sup></div>
+    <div class="charge neg"><b>Colonne 16</b><br><small>gagne 2 e⁻</small><div class="q">2−</div>O<sup>2−</sup>, S<sup>2−</sup></div>
+    <div class="charge neg"><b>Colonne 17</b><br><small>gagne 1 e⁻</small><div class="q">−</div>F<sup>−</sup>, Cl<sup>−</sup></div>
+  </div>
+  <p class="hint">Les colonnes 14 et 15 (C, N, Si, P…) et 18 (gaz nobles) ne forment pas d'ion monoatomique courant.</p>
+</section>
+
+<!-- 24-25 · Exercice 4 -->
+<section class="slide">
+  <span class="tag todo">À faire sur la fiche</span>
+  <h2>Exercice 4 – Prévoir la formule d'un ion</h2>
+  <ol class="ex">
+    <li>Le magnésium Mg a pour numéro atomique Z = 12.<br>
+      a. Écrire sa configuration électronique.<br>
+      b. Combien d'électrons doit-il perdre ou gagner pour avoir la configuration du gaz noble le plus proche ?<br>
+      c. En déduire la formule de l'ion formé. Est-ce un cation ou un anion ?<br>
+      d. Combien cet ion possède-t-il de protons ? d'électrons ?</li>
+    <li>L'oxygène O (Z = 8) est dans la colonne 16. Quel ion forme-t-il ? Écrire la configuration électronique de cet ion.</li>
+    <li>Le calcium Ca est situé juste en dessous du magnésium. Quel ion forme-t-il ?</li>
+    <li>Le chlorure de magnésium solide est électriquement neutre ; il est formé d'ions Mg<sup>2+</sup> et Cl<sup>−</sup>. Combien faut-il d'ions Cl<sup>−</sup> pour un ion Mg<sup>2+</sup> ? En déduire sa formule.</li>
+  </ol>
+  <details class="correction"><summary>Afficher la correction</summary><div class="inner">
+    <div class="cl"><span class="k">1. a</span><span>Mg : <b>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup></b></span></div>
+    <div class="cl"><span class="k">1. b</span><span>Le néon (1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup>) est le plus proche : Mg doit <b>perdre 2 électrons</b>.</span></div>
+    <div class="cl"><span class="k">1. c</span><span>Ion <b>Mg<sup>2+</sup></b> : c'est un <b>cation</b> (ion positif).</span></div>
+    <div class="cl"><span class="k">1. d</span><span><b>12 protons</b> (le noyau ne change pas) et 12 − 2 = <b>10 électrons</b>.</span></div>
+    <div class="cl"><span class="k">2.</span><span>O gagne 2 électrons → <b>O<sup>2−</sup></b> : 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> (comme le néon).</span></div>
+    <div class="cl"><span class="k">3.</span><span>Même colonne que Mg → <b>Ca<sup>2+</sup></b></span></div>
+    <div class="cl"><span class="k">4.</span><span>2 charges + compensées par 2 charges − : <b>2 ions Cl<sup>−</sup></b>, formule <b>MgCl<sub>2</sub></b></span></div>
+  </div></details>
+</section>
+
+<!-- 26-27 · Exercice 5 -->
+<section class="slide">
+  <span class="tag todo">À faire sur la fiche</span>
+  <h2>Exercice 5 – QCM bilan</h2>
+  <div>
+    <div class="qcm"><span><b>1.</b> La configuration de l'aluminium (Z = 13) est :</span><span><b>A</b> 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>1</sup></span><span><b>B</b> 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>3</sup></span><span><b>C</b> 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>9</sup></span></div>
+    <div class="qcm"><span><b>2.</b> L'atome 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>4</sup> possède… électrons de valence :</span><span><b>A</b> 4</span><span><b>B</b> 6</span><span><b>C</b> 16</span></div>
+    <div class="qcm"><span><b>3.</b> Ce même atome est situé :</span><span><b>A</b> 2<sup>e</sup> période, colonne 16</span><span><b>B</b> 3<sup>e</sup> période, colonne 16</span><span><b>C</b> 3<sup>e</sup> période, colonne 14</span></div>
+    <div class="qcm"><span><b>4.</b> Les gaz nobles sont stables car :</span><span><b>A</b> ils n'ont pas d'électrons</span><span><b>B</b> leur couche externe est saturée</span><span><b>C</b> leur noyau est lourd</span></div>
+    <div class="qcm"><span><b>5.</b> Le fluor F (colonne 17) forme l'ion :</span><span><b>A</b> F<sup>+</sup></span><span><b>B</b> F<sup>−</sup></span><span><b>C</b> F<sup>2−</sup></span></div>
+    <div class="qcm"><span><b>6.</b> Le potassium K, sous le sodium, forme l'ion :</span><span><b>A</b> K<sup>+</sup></span><span><b>B</b> K<sup>2+</sup></span><span><b>C</b> K<sup>−</sup></span></div>
+  </div>
+  <details class="correction"><summary>Afficher la correction</summary><div class="inner">
+    <div class="cl"><span class="badge">A</span><span><b>Question 1</b> — 2 + 2 + 6 + 2 + 1 = 13 ; une sous-couche s contient 2 électrons au maximum.</span></div>
+    <div class="cl"><span class="badge">B</span><span><b>Question 2</b> — Couche externe n = 3 : 2 + 4 = 6.</span></div>
+    <div class="cl"><span class="badge">B</span><span><b>Question 3</b> — n = 3 → 3<sup>e</sup> période ; 6 électrons de valence → colonne 16 (soufre).</span></div>
+    <div class="cl"><span class="badge">B</span><span><b>Question 4</b> — Couche externe pleine : duet (He) ou octet.</span></div>
+    <div class="cl"><span class="badge">B</span><span><b>Question 5</b> — 7 électrons de valence : il en gagne 1 pour avoir l'octet → F<sup>−</sup>.</span></div>
+    <div class="cl"><span class="badge">A</span><span><b>Question 6</b> — Même colonne que Na (colonne 1) → K<sup>+</sup>.</span></div>
+  </div></details>
+</section>
+
+<!-- 28 · Bilan -->
+<section class="slide" id="bilan">
+  <span class="tag">Bilan</span>
+  <h2>L'essentiel à retenir</h2>
+  <div class="g2">
+    <div class="box teal"><h3>Configuration</h3>Remplir 1s → 2s → 2p → 3s → 3p ; s : 2 e⁻ max, p : 6 e⁻ max.</div>
+    <div class="box gold"><h3>Valence</h3>Électrons de valence = électrons de la couche externe (n le plus grand).</div>
+    <div class="box teal"><h3>Période</h3>Numéro de la période = numéro de la couche externe.</div>
+    <div class="box gold"><h3>Colonne</h3>Même colonne = même nombre d'électrons de valence = même famille.</div>
+    <div class="box teal"><h3>Gaz nobles</h3>Couche externe saturée (duet ou octet) → grande stabilité.</div>
+    <div class="box gold"><h3>Ions</h3>Un atome gagne ou perd des électrons pour ressembler au gaz noble le plus proche.</div>
+  </div>
+</section>
+
+</main>
+<footer>Les électrons de l'atome · Physique-chimie 2de</footer>
+
+<script>
+/* Dessin des modèles d'atome (noyau + couches) */
+document.querySelectorAll('.atom').forEach(function(el){
+  var shells=el.dataset.shells.split(',').map(Number), S=+el.dataset.size||200, c=S/2;
+  var dark=!!el.closest('.dark:not(.box)'), ring=dark?'#9AA8C9':'#9AA8C9';
+  var step=(c-12)/ (shells.length+0.4), svg='';
+  shells.forEach(function(n,i){
+    var r=step*(i+1)+step*0.4;
+    svg+='<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="'+ring+'" stroke-width="1.2"/>';
+    for(var k=0;k<n;k++){var a=2*Math.PI*k/n - Math.PI/2 + (i%2?Math.PI/n:0);
+      svg+='<circle cx="'+(c+r*Math.cos(a))+'" cy="'+(c+r*Math.sin(a))+'" r="'+Math.max(3,S/45)+'" fill="#F2A007"/>';}
+    if(el.dataset.labels) svg+='<text x="'+(c+r*0.72)+'" y="'+(c-r*0.72)+'" font-size="11" font-weight="700" fill="#18224A">n = '+(i+1)+'</text>';
+  });
+  svg+='<circle cx="'+c+'" cy="'+c+'" r="'+Math.max(7,S/14)+'" fill="#D9480F"/>';
+  el.innerHTML='<svg viewBox="0 0 '+S+' '+S+'" width="'+S+'" height="'+S+'" role="img" aria-label="Modèle de l\'atome" style="display:block;margin:auto;max-width:100%">'+svg+'</svg>';
+});
+
+/* Tableau périodique des 18 premiers éléments */
+var rows=[[['H',1,'s'],0,0,0,0,0,0,['He',2,'s']],
+  [['Li',3,'s'],['Be',4,'s'],['B',5,'p'],['C',6,'p'],['N',7,'p'],['O',8,'p'],['F',9,'p'],['Ne',10,'p']],
+  [['Na',11,'s'],['Mg',12,'s'],['Al',13,'p'],['Si',14,'p'],['P',15,'p'],['S',16,'p'],['Cl',17,'p'],['Ar',18,'p']]];
+var cols=[1,2,13,14,15,16,17,18];
+document.querySelectorAll('[data-pt]').forEach(function(el){
+  var mini=el.dataset.pt==='mini', h='';
+  if(!mini){h+='<span></span>';cols.forEach(function(c){h+='<span class="h">'+c+'</span>';});}
+  else el.style.gridTemplateColumns='repeat(8,30px)';
+  rows.forEach(function(r,i){
+    if(!mini) h+='<span class="r">'+(i+1)+'</span>';
+    r.forEach(function(e){
+      if(!e){h+='<span class="cell empty"></span>';return;}
+      h+='<span class="cell '+e[2]+'"'+(mini?' style="font-size:.65rem"':'')+'>'+(mini?'':'<i>'+e[1]+'</i>')+e[0]+'</span>';
+    });
+  });
+  el.innerHTML=h;
+});
+</script>
+</body>
+</html>
